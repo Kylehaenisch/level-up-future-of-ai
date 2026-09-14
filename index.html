@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Level Up Future of AI</title>
+<style>
+  :root{
+    --bg: #08090f;
+    --bg-elevated: #10121d;
+    --bg-elevated-2: #171a2c;
+    --ink: #f1f2fb;
+    --ink-muted: #9799ba;
+    --ink-faint: #5d5f80;
+    --line: #23253d;
+    --line-bright: #383b5e;
+    --violet: #8b6bff;
+    --violet-soft: #8b6bff26;
+    --cyan: #35e6c4;
+    --cyan-soft: #35e6c41f;
+    --magenta: #ff5da2;
+    --magenta-soft: #ff5da224;
+    --amber: #ffb545;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --font-display: 'Chakra Petch', 'Segoe UI', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    padding-inline: clamp(18px, 5vw, 48px);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3{
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  p{ margin: 0; }
+  a{ color: inherit; }
+  img{ max-width: 100%; }
+
+  .wrap{ max-width: 1180px; margin-inline: auto; }
+
+  ::selection{ background: var(--violet-soft); color: var(--ink); }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+  }
+  .eyebrow::before{
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px 1px var(--cyan);
+    flex: none;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.98rem;
+    padding: 0.85em 1.6em;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    white-space: nowrap;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--violet), #6f4bff);
+    color: #fff;
+    box-shadow: 0 10px 30px -12px #8b6bff90;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 14px 34px -10px #8b6bffb0; }
+  .btn-ghost{
+    background: transparent;
+    border-color: var(--line-bright);
+    color: var(--ink);
+  }
+  .btn-ghost:hover{ border-color: var(--cyan); color: var(--cyan); }
+  .btn-sm{ padding: 0.6em 1.2em; font-size: 0.88rem; }
+  .btn-block{ width: 100%; }
+
+  /* ---------- Nav ---------- */
+  .site-nav{
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding-block: 18px;
+    background: linear-gradient(to bottom, #08090fee 78%, #08090f00);
+    backdrop-filter: blur(6px);
+  }
+  .nav-inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 0.65em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand-mark{ flex: none; display:block; }
+  .brand-text{ display: flex; flex-direction: column; line-height: 1.05; }
+  .brand-text b{
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.03em;
+  }
+  .brand-text span{
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+  .nav-links{
+    display: flex;
+    gap: 28px;
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+  }
+  .nav-links a{ text-decoration: none; transition: color .15s ease; }
+  .nav-links a:hover{ color: var(--ink); }
+  @media (max-width: 760px){
+    .nav-links{ display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding-block: clamp(48px, 8vw, 88px) clamp(40px, 6vw, 64px); }
+  .hero-inner{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+  }
+  @media (max-width: 860px){
+    .hero-inner{ grid-template-columns: 1fr; }
+  }
+  .hero-copy{ display: flex; flex-direction: column; gap: 22px; }
+  .hero-copy h1{
+    font-size: clamp(2.4rem, 5.4vw, 3.7rem);
+    line-height: 1.05;
+  }
+  .hero-copy h1 em{
+    font-style: normal;
+    background: linear-gradient(100deg, var(--violet), var(--cyan) 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .lede{
+    font-size: 1.08rem;
+    color: var(--ink-muted);
+    max-width: 46ch;
+  }
+  .hero-actions{ display: flex; gap: 14px; flex-wrap: wrap; }
+  .trust-row{
+    display: flex; flex-wrap: wrap; gap: 10px 22px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+  .trust-row span{ display:flex; align-items:center; gap: 0.5em; }
+  .trust-row span::before{ content:"✓"; color: var(--cyan); }
+
+  /* ---------- Hero visual ---------- */
+  .hero-visual{ position: relative; display: flex; align-items: center; justify-content: center; min-height: 320px; }
+  .orb{
+    width: min(340px, 80%);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: relative;
+    background:
+      radial-gradient(circle at 32% 28%, #8b6bff55, transparent 60%),
+      radial-gradient(circle at 68% 72%, #35e6c440, transparent 55%),
+      radial-gradient(circle, #12142280, #08090f 72%);
+    border: 1px solid var(--line-bright);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .orb::before{
+    content: "";
+    position: absolute; inset: -18px;
+    border-radius: 50%;
+    border: 1px dashed #383b5e80;
+    animation: spin 34s linear infinite;
+  }
+  .orb::after{
+    content: "";
+    position: absolute; inset: 14%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #8b6bff00, #8b6bff70, #35e6c470, #8b6bff00 80%);
+    filter: blur(10px);
+    animation: spin 12s linear infinite;
+    opacity: .8;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+  .orb-core{
+    position: relative; z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+  .orb-core b{
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+
+  .stat-card{
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+    background: #10121df0;
+    border: 1px solid var(--line-bright);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    box-shadow: 0 20px 50px -20px #000000b0;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    width: 188px;
+  }
+  @media (max-width: 500px){ .stat-card{ position: static; margin-top: -18px; width: 100%; } }
+  .stat-card .stat-title{
+    color: var(--ink-faint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.66rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .stat-row{ display: flex; justify-content: space-between; padding-block: 4px; color: var(--ink-muted); }
+  .stat-row b{ color: var(--cyan); font-variant-numeric: tabular-nums; }
+
+  /* ---------- Marquee ---------- */
+  .marquee-strip{
+    border-block: 1px solid var(--line);
+    padding-block: 16px;
+    margin-block: clamp(36px, 6vw, 60px);
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track{
+    display: flex;
+    gap: 48px;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+  .marquee-track span{
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .marquee-track span b{ color: var(--ink-muted); font-weight: 500; }
+
+  /* ---------- Section shared ---------- */
+  section{ padding-block: clamp(40px, 6vw, 72px); }
+  .section-head{
+    max-width: 62ch;
+    margin-bottom: clamp(28px, 4vw, 44px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .section-head h2{ font-size: clamp(1.7rem, 3.4vw, 2.3rem); }
+  .section-head p{ color: var(--ink-muted); }
+
+  /* ---------- Flagship ---------- */
+  .flagship-card{
+    background: linear-gradient(180deg, #12142499, #10121d99);
+    border: 1px solid var(--line-bright);
+    border-radius: var(--radius-lg);
+    padding: clamp(22px, 4vw, 38px);
+    position: relative;
+    overflow: hidden;
+  }
+  .flagship-card::before{
+    content:"";
+    position: absolute; top: -40%; right: -10%;
+    width: 60%; aspect-ratio: 1;
+    background: radial-gradient(circle, #ff5da21f, transparent 70%);
+    pointer-events: none;
+  }
+  .flagship-badge{
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--magenta);
+    background: var(--magenta-soft);
+    border: 1px solid #ff5da255;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .flagship-top{
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px 32px;
+    align-items: flex-end;
+    margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  .flagship-top h3{ font-size: clamp(1.5rem, 3vw, 2rem); max-width: 30ch; }
+  .flagship-top p{ color: var(--ink-muted); max-width: 42ch; margin-top: 10px; }
+  .flagship-meta{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    display: flex; gap: 18px; flex-wrap: wrap;
+  }
+  .flagship-meta b{ color: var(--ink); }
+
+  .cat5-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    position: relative; z-index: 1;
+  }
+  .cat5-tile{
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex; flex-direction: column; gap: 10px;
+    transition: border-color .18s ease, transform .18s ease;
+  }
+  .cat5-tile:hover{ border-color: var(--violet); transform: translateY(-3px); }
+  .cat5-tile svg{ color: var(--violet); }
+  .cat5-tile h4{ font-family: var(--font-body); font-weight: 600; font-size: 0.98rem; margin: 0; }
+  .cat5-tile .count{
+    font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .cat5-tile ul{ margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .cat5-tile li{ font-size: 0.84rem; color: var(--ink-muted); padding-left: 1.1em; position: relative; }
+  .cat5-tile li::before{ content: "›"; position: absolute; left: 0; color: var(--cyan); }
+
+  .flagship-cta{ margin-top: 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
+  .flagship-cta .price-note{ font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-faint); }
+
+  /* ---------- Category cards ---------- */
+  .cat-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+  }
+  .cat-card{
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: border-color .18s ease, transform .18s ease, background .18s ease;
+  }
+  .cat-card:hover{ border-color: var(--line-bright); background: var(--bg-elevated-2); transform: translateY(-3px); }
+  .cat-icon{
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--violet-soft);
+    color: var(--violet);
+  }
+  .cat-card h3{ font-size: 1.15rem; }
+  .cat-card p{ color: var(--ink-muted); font-size: 0.92rem; flex: 1; }
+  .status-pill{
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .status-live{ background: var(--cyan-soft); color: var(--cyan); border: 1px solid #35e6c455; }
+  .status-soon{ background: #ffb5451f; color: var(--amber); border: 1px solid #ffb54550; }
+  .cat-card a.cat-link{
+    font-size: 0.9rem; font-weight: 600; color: var(--ink);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .cat-card a.cat-link:hover{ color: var(--cyan); }
+
+  /* ---------- How it works ---------- */
+  .steps{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    position: relative;
+  }
+  .step{
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+  }
+  .step-num{
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--violet);
+    width: fit-content;
+  }
+  .step h3{ font-size: 1.05rem; font-family: var(--font-body); font-weight: 600; }
+  .step p{ color: var(--ink-muted); font-size: 0.92rem; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list{ display: flex; flex-direction: column; gap: 10px; max-width: 780px; }
+  details{
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 4px 20px;
+  }
+  details[open]{ border-color: var(--line-bright); }
+  summary{
+    cursor: pointer;
+    list-style: none;
+    padding-block: 16px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  summary::-webkit-details-marker{ display: none; }
+  summary::after{
+    content: "+";
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--violet);
+    flex: none;
+    transition: transform .2s ease;
+  }
+  details[open] summary::after{ content: "−"; }
+  details p{ color: var(--ink-muted); padding-bottom: 18px; font-size: 0.94rem; max-width: 62ch; }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{
+    text-align: center;
+    border: 1px solid var(--line-bright);
+    border-radius: var(--radius-lg);
+    padding: clamp(36px, 6vw, 60px) clamp(20px, 6vw, 40px);
+    background:
+      radial-gradient(circle at 20% 20%, #8b6bff22, transparent 55%),
+      radial-gradient(circle at 80% 80%, #35e6c41c, transparent 55%),
+      var(--bg-elevated);
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .cta-band h2{ font-size: clamp(1.6rem, 3.6vw, 2.4rem); max-width: 20ch; }
+  .cta-band p{ color: var(--ink-muted); max-width: 50ch; }
+
+  /* ---------- Footer ---------- */
+  .site-footer{ padding-block: 48px 40px; border-top: 1px solid var(--line); margin-top: 20px; }
+  .footer-inner{
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 28px;
+    align-items: flex-start;
+  }
+  .footer-links{ display: flex; gap: 26px; flex-wrap: wrap; font-size: 0.9rem; color: var(--ink-muted); }
+  .footer-links a{ text-decoration: none; }
+  .footer-links a:hover{ color: var(--ink); }
+  .footer-tagline{ color: var(--ink-faint); font-size: 0.88rem; max-width: 34ch; margin-top: 8px; }
+  .fine-print{
+    margin-top: 34px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+
+  /* fade-in on load */
+  .fade-in{ animation: fadeUp .7s ease both; }
+  .fade-in.d2{ animation-delay: .1s; }
+  .fade-in.d3{ animation-delay: .2s; }
+  @keyframes fadeUp{
+    from{ opacity: 0; transform: translateY(10px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="17,2 30,9.5 30,24.5 17,32 4,24.5 4,9.5" stroke="url(#gradA)" stroke-width="1.6"/>
+        <circle cx="17" cy="17" r="4.2" fill="url(#gradA)"/>
+        <defs>
+          <linearGradient id="gradA" x1="4" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#8b6bff"/>
+            <stop offset="1" stop-color="#35e6c4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="brand-text"><b>LEVEL UP</b><span>Future of AI</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#vault">Prompt Vault</a>
+      <a href="#categories">Categories</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Get Access</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy fade-in">
+        <span class="eyebrow">AI Digital Products · Whop Store</span>
+        <h1>Stop starting from a <em>blank prompt.</em></h1>
+        <p class="lede">Level Up Future of AI is a growing vault of prompt packs, custom GPTs, automation templates and AI courses — built so you can put AI to work in minutes, not weeks.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Get the Prompt Vault →</a>
+          <a class="btn btn-ghost" href="#categories">See what's inside</a>
+        </div>
+        <div class="trust-row">
+          <span>Instant delivery</span>
+          <span>Lifetime access</span>
+          <span>Secure checkout via Whop</span>
+        </div>
+      </div>
+      <div class="hero-visual fade-in d2">
+        <div class="orb">
+          <div class="orb-core">Prompt Vault<b>25</b>templates loaded</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Vault Status</span>
+          <div class="stat-row"><span>Templates</span><b>25</b></div>
+          <div class="stat-row"><span>Categories</span><b>05</b></div>
+          <div class="stat-row"><span>Access</span><b>Instant</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Works with <b>ChatGPT</b></span>
+      <span>Works with <b>Claude</b></span>
+      <span>Works with <b>Gemini</b></span>
+      <span>Works with <b>Midjourney</b></span>
+      <span>Works with <b>n8n</b></span>
+      <span>Works with <b>Zapier</b></span>
+      <span>Works with <b>Notion AI</b></span>
+      <span>Works with <b>Runway</b></span>
+      <span>Works with <b>ChatGPT</b></span>
+      <span>Works with <b>Claude</b></span>
+      <span>Works with <b>Gemini</b></span>
+      <span>Works with <b>Midjourney</b></span>
+      <span>Works with <b>n8n</b></span>
+      <span>Works with <b>Zapier</b></span>
+      <span>Works with <b>Notion AI</b></span>
+      <span>Works with <b>Runway</b></span>
+    </div>
+  </div>
+
+  <section id="vault">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Flagship Drop</span>
+        <h2>Inside the AI Prompt Vault</h2>
+        <p>25 ready-to-use templates, organized into five categories, so you always have the right prompt on hand instead of rewriting one from scratch.</p>
+      </div>
+
+      <div class="flagship-card">
+        <span class="flagship-badge">Live now on Whop</span>
+        <div class="flagship-top">
+          <div>
+            <h3>AI Prompt Vault — 25 Ready-to-Use Templates</h3>
+            <p>A single vault covering the AI tasks people actually do every week — writing, strategy, code, marketing and research — each prompt written to drop straight into ChatGPT, Claude or Gemini.</p>
+          </div>
+          <div class="flagship-meta">
+            <span><b>25</b> templates</span>
+            <span><b>5</b> categories</span>
+            <span><b>Instant</b> unlock</span>
+          </div>
+        </div>
+
+        <div class="cat5-grid">
+          <div class="cat5-tile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20L16 8M16 8h-4M16 8v4"/><path d="M4 4h6M4 4v6"/></svg>
+            <h4>Content &amp; Copywriting</h4>
+            <span class="count">5 prompts</span>
+            <ul>
+              <li>Weekly LinkedIn content engine</li>
+              <li>Sales page hook generator</li>
+            </ul>
+          </div>
+          <div class="cat5-tile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19h16M7 19V9M12 19V5M17 19v7"/></svg>
+            <h4>Business &amp; Strategy</h4>
+            <span class="count">5 prompts</span>
+            <ul>
+              <li>Competitor teardown analyzer</li>
+              <li>90-day growth plan builder</li>
+            </ul>
+          </div>
+          <div class="cat5-tile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 6L3 12l5 6M16 6l5 6-5 6"/></svg>
+            <h4>Coding &amp; Automation</h4>
+            <span class="count">5 prompts</span>
+            <ul>
+              <li>Bug-hunting code reviewer</li>
+              <li>API doc writer</li>
+            </ul>
+          </div>
+          <div class="cat5-tile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11l18-7-7 18-2-8-8-2z"/></svg>
+            <h4>Marketing &amp; Social</h4>
+            <span class="count">5 prompts</span>
+            <ul>
+              <li>Short-form video script builder</li>
+              <li>Cold outreach sequence</li>
+            </ul>
+          </div>
+          <div class="cat5-tile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 13l4 4L19 7"/></svg>
+            <h4>Productivity &amp; Research</h4>
+            <span class="count">5 prompts</span>
+            <ul>
+              <li>Meeting-to-action-items converter</li>
+              <li>Deep research brief builder</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flagship-cta">
+          <a class="btn btn-primary" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Unlock the Vault on Whop →</a>
+          <span class="price-note">See current pricing &amp; access on the Whop product page</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="categories">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The Store</span>
+        <h2>Everything Level Up Future of AI sells</h2>
+        <p>The Prompt Vault is live now — GPTs, courses and automations are being built out inside the same Whop store. Join to unlock what's live and get notified the moment new drops land.</p>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card">
+          <div class="cat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="4" rx="1"/><rect x="4" y="10" width="16" height="4" rx="1"/><rect x="4" y="16" width="16" height="4" rx="1"/></svg>
+          </div>
+          <span class="status-pill status-live">Live</span>
+          <h3>Prompt Packs</h3>
+          <p>Curated, tested prompt templates for ChatGPT, Claude and Gemini — organized by use case so you can copy, paste and go.</p>
+          <a class="cat-link" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Explore on Whop →</a>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>
+          </div>
+          <span class="status-pill status-soon">In the vault</span>
+          <h3>Custom GPTs &amp; Agents</h3>
+          <p>Pre-built custom GPTs and AI agents configured for specific jobs — research, outreach, planning — ready to use on day one.</p>
+          <a class="cat-link" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Join the store →</a>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4l14 8-14 8V4z"/></svg>
+          </div>
+          <span class="status-pill status-soon">In the vault</span>
+          <h3>AI Courses &amp; Guides</h3>
+          <p>Focused, no-fluff guides that walk through applying AI tools to real work — not just theory.</p>
+          <a class="cat-link" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Join the store →</a>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>
+          </div>
+          <span class="status-pill status-soon">In the vault</span>
+          <h3>Automation Templates</h3>
+          <p>Ready-to-import n8n and Zapier workflows that connect AI tools into a system that runs on its own.</p>
+          <a class="cat-link" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Join the store →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">How It Works</span>
+        <h2>From checkout to using it — in under a minute</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h3>Get access on Whop</h3>
+          <p>Hit "Get Access" and complete checkout securely through Whop — no separate account to create.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h3>Unlock instantly</h3>
+          <p>Your purchase shows up right away in your Whop library, ready to open on desktop or mobile.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h3>Start using it today</h3>
+          <p>Copy a prompt into your AI tool of choice, or open a template, and put it to work immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions before you get in</h2>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>What exactly do I get with the Prompt Vault?</summary>
+          <p>25 written prompt templates split across five categories — content &amp; copywriting, business &amp; strategy, coding &amp; automation, marketing &amp; social, and productivity &amp; research. Each one is ready to copy and paste into your AI tool.</p>
+        </details>
+        <details>
+          <summary>Which AI tools do these prompts work with?</summary>
+          <p>The templates are written to work with ChatGPT, Claude and Gemini out of the box, and adapt cleanly to most other chat-based AI tools.</p>
+        </details>
+        <details>
+          <summary>How do I access my purchase after buying?</summary>
+          <p>Everything is delivered through Whop. After checkout, your purchase appears in your Whop library instantly — accessible from the Whop app or website, anytime.</p>
+        </details>
+        <details>
+          <summary>Do you add new prompts or products over time?</summary>
+          <p>Yes — the vault is actively being built out with new prompt packs, custom GPTs, automation templates and courses. Members get access to updates as they ship.</p>
+        </details>
+        <details>
+          <summary>What's the refund policy?</summary>
+          <p>Refunds and support are handled directly through Whop. Check the current policy listed on the product's Whop page before purchasing.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="cta-band">
+        <span class="eyebrow">Ready when you are</span>
+        <h2>Get the tools to build with AI, not fight it.</h2>
+        <p>Join Level Up Future of AI on Whop and unlock the Prompt Vault instantly — with every new drop added to your library automatically.</p>
+        <a class="btn btn-primary" href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Get Access on Whop →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <a class="brand" href="#top">
+          <svg class="brand-mark" width="30" height="30" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="17,2 30,9.5 30,24.5 17,32 4,24.5 4,9.5" stroke="url(#gradB)" stroke-width="1.6"/>
+            <circle cx="17" cy="17" r="4.2" fill="url(#gradB)"/>
+            <defs>
+              <linearGradient id="gradB" x1="4" y1="2" x2="30" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#8b6bff"/>
+                <stop offset="1" stop-color="#35e6c4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="brand-text"><b>LEVEL UP</b><span>Future of AI</span></span>
+        </a>
+        <p class="footer-tagline">AI prompts, agents, automations and courses — all in one Whop store.</p>
+      </div>
+      <nav class="footer-links">
+        <a href="#vault">Prompt Vault</a>
+        <a href="#categories">Categories</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://whop.com/ai-prompt-vault-25-ready-to-use-templates/" target="_blank" rel="noopener">Whop Store</a>
+      </nav>
+    </div>
+    <div class="fine-print">
+      <span>© 2026 Level Up Future of AI</span>
+      <span>Powered by Whop</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
